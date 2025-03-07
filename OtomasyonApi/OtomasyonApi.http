@@ -1,6 +1,0 @@
-@OtomasyonApi_HostAddress = http://localhost:5196
-
-GET {{OtomasyonApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
