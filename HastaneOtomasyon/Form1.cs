@@ -6,7 +6,11 @@ namespace HastaneOtomasyon
     public partial class Form1 : Form
     {
         private readonly string connectionStr = "server=localhost;database=hastane;user=root;pwd=";
-        int doktor_id;
+        doktorSservice doktorSservice = new doktorSservice();
+        decimal tcno;
+        string sifre,doktorad,doktorsoyad,bolumadi;
+        int doktor_id,bolum;
+        
         public Form1()
         {
             InitializeComponent();
@@ -22,38 +26,19 @@ namespace HastaneOtomasyon
         }
         public async void giris()
         {
-            try
-            {
-                await using MySqlConnection connection = new MySqlConnection(connectionStr);
-                {
-                    connection.Open();
-                    string query = "select * from doktorlar where sifre=@sifre and tc_no=@tc_no";
-                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@tc_no", textBox1.Text);
-                        cmd.Parameters.AddWithValue("@sifre", textBox2.Text);
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (!reader.Read())
-                            {
-                                MessageBox.Show("kullanýcý adý veya þifre hatalý");
-                            }
-                            else
-                            {
-                                doktor_id = int.Parse(reader["doktor_id"].ToString());
-                                MessageBox.Show("Hoþgeldiniz");
-                                Form2 form2 = new Form2(doktor_id);
-                                form2.ShowDialog();
-                                this.Close();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            tcno =Convert.ToDecimal(textBox1.Text);
+            sifre = textBox2.Text;
+            doktorlar doktor = doktorSservice.doktorBilgi(tcno, sifre);
+            doktor_id =doktor.doktor_id;
+            //doktor_id = 1;
+            bolum = doktor.bolum;
+            doktorsoyad = doktor.soyad;
+            doktorad = doktor.ad;
+            bolumadi = doktor.bolumadi;
+            MessageBox.Show("Hoþgeldiniz");
+            Form2 form2 = new Form2(doktor_id,doktorad,doktorsoyad, bolum, bolumadi);
+            form2.ShowDialog();
+            this.Close();
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {

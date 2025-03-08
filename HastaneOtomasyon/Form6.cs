@@ -14,7 +14,6 @@ namespace HastaneOtomasyon
     public partial class Form6 : Form
     {
         kisiService kisiService=new kisiService();
-        private readonly string constr = "server=localhost;database=hastane;user=root;pwd=;";
         int bolum;
         public Form6(int bolum)
         {
@@ -28,6 +27,8 @@ namespace HastaneOtomasyon
             string soyad = textBox2.Text;
             decimal tc_no = Convert.ToDecimal(textBox3.Text);
             kisiService.hastakaydet(ad, soyad, tc_no, bolum);
+            MessageBox.Show("kayıt başarıyla eklendi");
+            this.Close();
         }
 
         private void Form6_Load(object sender, EventArgs e)

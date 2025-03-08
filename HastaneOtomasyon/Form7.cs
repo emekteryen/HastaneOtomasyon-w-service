@@ -43,6 +43,7 @@ namespace HastaneOtomasyon
             
             taniService.taniKaydet(hastaid, taniVerisi);
             yazdır();
+            this.Close();
         }
         public void yazdır()
         {

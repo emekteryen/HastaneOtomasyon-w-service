@@ -55,6 +55,7 @@ namespace HastaneOtomasyon
             saatal();
             if(randevusaat < DateTime.Now) { MessageBox.Show("Geçmiş bir tarihe randevu veremezsiniz!");return; }
             randevuService.randevual(bolum ,doktor_id, hastaid, randevusaat);
+            this.Close();
         }
         public void saatal()
         {

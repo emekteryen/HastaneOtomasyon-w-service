@@ -63,7 +63,7 @@ namespace HastaneOtomasyon
         {
             DateTime tarih = Convert.ToDateTime(dataGridView1.Rows[secim].Cells["randevu_tarihi"].Value.ToString());
             randevuService.randevuSilme(tarih);
-            dataGridView1.Rows.Clear();
+            dataGridView1.DataSource = null;
             randevugetir();
 
         }

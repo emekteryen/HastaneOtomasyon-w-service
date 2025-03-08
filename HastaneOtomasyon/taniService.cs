@@ -29,7 +29,7 @@ namespace HastaneOtomasyon
                     using (MySqlCommand cm = new MySqlCommand(query, con))
                     {
                         cm.Parameters.AddWithValue("@hasta_id", hastaid);
-                        using (MySqlDataAdapter da = new MySqlDataAdapter())
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cm))
                         {
                             da.Fill(dt);
                         }

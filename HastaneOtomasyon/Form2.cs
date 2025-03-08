@@ -15,18 +15,24 @@ namespace HastaneOtomasyon
     {
         private string connectionString = "server=localhost;database=hastane;user=root;pwd=;";
         int doktor_id, bolum, hastaid, rowIndex;
-        string h_ad,h_soyad;
+        string h_ad,h_soyad,d_ad,d_soyad,b_adi;
         decimal h_tcno;
         kisiService kisiService = new kisiService();
-        public Form2(int doktor_id)
+        public Form2(int doktor_id,string doktorad,string doktorsoyad,int bolum, string b_adi)
         {
             InitializeComponent();
             this.doktor_id = doktor_id;
+            this.bolum = bolum;
+            this.d_ad = doktorad;
+            this.b_adi = b_adi;
+            this.d_soyad = doktorsoyad;
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            doktorbilgi();           
+            label1.Text = d_ad;
+            label2.Text = d_soyad;
+            label3.Text = b_adi;
             dataGridView1.AutoGenerateColumns = true;
             hastaListele();
         }
@@ -145,35 +151,6 @@ namespace HastaneOtomasyon
             foreach (var hasta in hastalar)
             {
                 dataGridView1.Rows.Add(hasta.hasta_id, hasta.ad, hasta.soyad, hasta.tc_no);
-            }
-        }
-        public void doktorbilgi()
-        {
-            try
-            {
-                using (MySqlConnection con5 = new MySqlConnection(connectionString))
-                {
-                    con5.Open();
-                    string query = "select d.ad, d.soyad, d.bolum_id, b.bolum_adi from doktorlar d join bolumler b on d.bolum_id = b.bolum_id where doktor_id=@doktor_id";
-                    using (MySqlCommand cmd = new MySqlCommand(query, con5))
-                    {
-                        cmd.Parameters.AddWithValue("@doktor_id", doktor_id);
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                label1.Text = reader["ad"].ToString();
-                                label2.Text = reader["soyad"].ToString();
-                                label3.Text = reader["bolum_adi"].ToString();
-                                bolum = int.Parse(reader["bolum_id"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
     }
